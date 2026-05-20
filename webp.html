@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Barış Polat — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --bg: #f0ede8;
+      --white: #faf9f7;
+      --ink: #0e0d0b;
+      --ink2: #3a3834;
+      --muted: #9c9890;
+      --lime: #c8f53a;
+      --lime-dk: #9ec200;
+      --card: #faf9f7;
+      --border: #e0ddd7;
+      --r: 16px;
+      --t: 0.28s cubic-bezier(.4,0,.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Instrument Sans', sans-serif;
+      line-height: 1.65;
+      cursor: none;
+    }
+
+    /* CURSOR */
+    #cursor, #cursor-follower {
+      position: fixed; border-radius: 50%; pointer-events: none; z-index: 9999;
+    }
+    #cursor {
+      width: 12px; height: 12px; background: var(--lime);
+      transform: translate(-50%, -50%);
+      outline: 2px solid rgba(0,0,0,0.25);
+      transition: width .15s, height .15s;
+    }
+    #cursor-follower {
+      width: 38px; height: 38px;
+      border: 2.5px solid var(--lime);
+      transform: translate(-50%, -50%);
+      transition: left .1s ease, top .1s ease;
+      outline: 1px solid rgba(0,0,0,0.1);
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 1.25rem; left: 50%; transform: translateX(-50%);
+      z-index: 100;
+      background: rgba(14,13,11,0.92);
+      backdrop-filter: blur(20px);
+      border-radius: 999px;
+      display: flex; align-items: center; gap: 0;
+      padding: 0.4rem 0.4rem 0.4rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 4px 32px rgba(0,0,0,0.18);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      color: var(--lime); font-size: 0.9rem;
+      letter-spacing: 0.03em; text-decoration: none; margin-right: 1.5rem;
+    }
+
+    .nav-links { display: flex; gap: 0.25rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.55); text-decoration: none;
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.04em;
+      padding: 0.5rem 0.9rem; border-radius: 999px;
+      transition: var(--t);
+    }
+    .nav-links a:hover { background: rgba(200,245,58,0.12); color: var(--lime); }
+
+    .nav-cta {
+      background: var(--lime); color: var(--ink); font-size: 0.8rem;
+      font-weight: 700; font-family: 'Syne', sans-serif;
+      padding: 0.55rem 1.25rem; border-radius: 999px;
+      text-decoration: none; margin-left: 0.5rem; transition: var(--t);
+    }
+    .nav-cta:hover { background: #d9ff45; }
+
+    /* HERO */
+    #home {
+      min-height: 100vh; padding: 7rem 3vw 4rem;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 2rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 28px; height: 2px; background: var(--lime-dk);
+    }
+
+    .hero-name {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(4rem, 12vw, 9rem);
+      line-height: 0.95; letter-spacing: -0.04em;
+      color: var(--ink);
+    }
+    .hero-name em {
+      font-style: normal;
+      -webkit-text-stroke: 2px var(--ink);
+      color: transparent;
+    }
+
+    .hero-bottom {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-top: 3rem; flex-wrap: wrap; gap: 2rem;
+    }
+    .hero-desc { max-width: 480px; color: var(--ink2); font-size: 1.05rem; }
+    .hero-desc strong { color: var(--ink); }
+
+    .hero-btns { display: flex; gap: 0.75rem; flex-shrink: 0; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 1.75rem; border-radius: var(--r);
+      font-size: 0.875rem; font-weight: 600;
+      font-family: 'Syne', sans-serif;
+      text-decoration: none; border: none; cursor: none;
+      transition: var(--t);
+    }
+    .btn-lime { background: var(--lime); color: var(--ink); }
+    .btn-lime:hover { background: #d9ff45; transform: translateY(-2px) scale(1.02); }
+    .btn-ghost { background: var(--card); color: var(--ink); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--ink); transform: translateY(-2px); }
+
+    /* SECTION WRAPPER */
+    .section-wrap { padding: 5rem 3vw; }
+    .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 3rem; }
+    .section-num {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.1; letter-spacing: -0.02em;
+    }
+
+    /* BENTO GRID — ABOUT */
+    #about { background: var(--ink); }
+    #about .section-title { color: var(--white); }
+    #about .section-num { color: rgba(255,255,255,0.25); }
+
+    .about-bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 1rem;
+    }
+
+    .bento {
+      background: #1a1917; border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--r); padding: 2rem;
+      transition: var(--t);
+    }
+    .bento:hover { border-color: rgba(200,245,58,0.25); }
+
+    .bento-bio   { grid-column: span 7; }
+    .bento-photo { grid-column: span 5; min-height: 280px; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #111; }
+    .bento-edu   { grid-column: span 6; }
+    .bento-stats { grid-column: span 6; display: flex; gap: 0; }
+
+    .bento-label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--lime); margin-bottom: 1rem;
+    }
+    .bento p { color: rgba(255,255,255,0.6); font-size: 0.95rem; line-height: 1.7; }
+    .bento p strong { color: var(--white); }
+
+    .photo-placeholder {
+      display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+      color: rgba(255,255,255,0.2);
+    }
+    .photo-placeholder i { font-size: 3.5rem; }
+    .photo-placeholder span { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    .edu-item-dark {
+      display: flex; gap: 1rem; padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .edu-item-dark:last-child { border-bottom: none; }
+    .edu-dot { width: 8px; height: 8px; background: var(--lime); border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+    .edu-name { font-weight: 600; color: var(--white); font-size: 0.9rem; }
+    .edu-info { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
+
+    .stat-cell {
+      flex: 1; display: flex; flex-direction: column; justify-content: center;
+      align-items: center; text-align: center; gap: 0.3rem;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num { font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800; color: var(--lime); line-height: 1; }
+    .stat-txt { font-size: 0.75rem; color: rgba(255,255,255,0.35); letter-spacing: 0.08em; text-transform: uppercase; }
+
+    /* PROJECTS */
+    #projects { background: var(--bg); }
+
+    .projects-layout { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+
+    .proj-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 2rem;
+      display: flex; flex-direction: column; gap: 1.25rem;
+      position: relative; overflow: hidden;
+      transition: var(--t);
+    }
+    .proj-card::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; right: 0; height: 0;
+      background: var(--lime);
+      transition: height var(--t);
+      z-index: 0;
+    }
+    .proj-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,0.09); }
+    .proj-card:hover::after { height: 4px; }
+    .proj-card > * { position: relative; z-index: 1; }
+
+    .proj-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .proj-emoji { font-size: 2rem; }
+    .proj-github {
+      width: 36px; height: 36px; background: var(--bg);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      color: var(--ink2); text-decoration: none; font-size: 1rem; transition: var(--t);
+    }
+    .proj-github:hover { background: var(--ink); color: var(--lime); }
+
+    .proj-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; }
+    .proj-desc { color: var(--muted); font-size: 0.875rem; flex: 1; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .proj-tag {
+      background: var(--bg); border: 1px solid var(--border);
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em;
+      padding: 0.25rem 0.65rem; border-radius: 6px; color: var(--ink2);
+    }
+
+    /* SKILLS */
+    #skills { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+
+    .skill-box {
+      border: 1px solid var(--border); border-radius: var(--r); padding: 1.75rem;
+      transition: var(--t);
+    }
+    .skill-box:hover { border-color: var(--lime-dk); background: #f7fde8; }
+
+    .skill-box-title {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.85rem;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+      margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .skill-box-title i { color: var(--lime-dk); }
+
+    .pills { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .pill {
+      background: var(--bg); border: 1px solid var(--border);
+      color: var(--ink2); font-size: 0.8rem; font-weight: 500;
+      padding: 0.3rem 0.8rem; border-radius: 8px; transition: var(--t);
+    }
+    .pill:hover { background: var(--lime); color: var(--ink); border-color: var(--lime); }
+
+    /* CV */
+    #cv { background: var(--bg); }
+
+    .cv-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    .cv-box {
+      border-radius: var(--r); padding: 3rem 2.5rem;
+      display: flex; flex-direction: column; gap: 1.5rem;
+      align-items: flex-start; transition: var(--t);
+    }
+    .cv-box-tr { background: var(--ink); }
+    .cv-box-en { background: var(--card); border: 1px solid var(--border); }
+    .cv-box:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.1); }
+
+    .cv-box-flag { font-size: 2.5rem; }
+    .cv-box-lang { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; }
+    .cv-box-tr .cv-box-lang { color: var(--white); }
+    .cv-box-en .cv-box-lang { color: var(--ink); }
+    .cv-box-sub { font-size: 0.875rem; }
+    .cv-box-tr .cv-box-sub { color: rgba(255,255,255,0.45); }
+    .cv-box-en .cv-box-sub { color: var(--muted); }
+
+    .btn-white { background: var(--white); color: var(--ink); }
+    .btn-white:hover { background: var(--lime); }
+    .btn-ink { background: var(--ink); color: var(--white); }
+    .btn-ink:hover { background: #2a2926; transform: translateY(-2px); }
+
+    /* CONTACT */
+    #contact { background: var(--lime); }
+    #contact .section-title { color: var(--ink); }
+    #contact .section-num { color: rgba(14,13,11,0.3); }
+
+    .contact-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+    }
+    .contact-lead { font-size: 1.1rem; color: var(--ink2); max-width: 380px; line-height: 1.7; }
+
+    .clinks { display: flex; flex-direction: column; gap: 0.75rem; }
+    .clink {
+      display: flex; align-items: center; gap: 1rem;
+      background: rgba(14,13,11,0.07); border-radius: var(--r);
+      padding: 1.1rem 1.5rem; text-decoration: none;
+      transition: var(--t); color: var(--ink);
+    }
+    .clink:hover { background: var(--ink); color: var(--lime); transform: translateX(8px); }
+    .clink i { font-size: 1.1rem; width: 22px; text-align: center; flex-shrink: 0; }
+    .clink-lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.5; }
+    .clink-val { font-weight: 600; font-size: 0.9rem; font-family: 'Syne', sans-serif; }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink); text-align: center;
+      padding: 1.75rem; color: rgba(255,255,255,0.25); font-size: 0.8rem;
+    }
+    footer span { color: var(--lime); }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* MOBILE */
+    @media(max-width:900px) {
+      nav { top: 0.75rem; padding: 0.35rem 0.35rem 0.35rem 1.25rem; }
+      .nav-links { display: none; }
+      .projects-layout { grid-template-columns: 1fr; }
+      .about-bento { grid-template-columns: 1fr; }
+      .bento-bio, .bento-photo, .bento-edu, .bento-stats { grid-column: span 1; }
+      .cv-row { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    @media(max-width:600px) {
+      .hero-name { font-size: clamp(3rem, 14vw, 5rem); }
+      .hero-bottom { flex-direction: column; align-items: flex-start; }
+      body { cursor: auto; }
+      #cursor, #cursor-follower { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CUSTOM CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-follower"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#home">BP</a>
+  <ul class="nav-links">
+    <li><a href="#about">Hakkımda</a></li>
+    <li><a href="#projects">Projeler</a></li>
+    <li><a href="#skills">Beceriler</a></li>
+    <li><a href="#cv">CV</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">İletişim →</a>
+</nav>
+
+<!-- ──── HERO ──── -->
+<section id="home">
+  <p class="hero-eyebrow">Yazılım Geliştirici &amp; Öğrenci — 2025/2026</p>
+  <h1 class="hero-name">
+    BARIŞ<br><em>POLAT</em>
+  </h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">
+      <strong>MBP 206</strong> öğrencisi, sistem analizi ve yazılım geliştirme
+      tutkunu. Kod yazmayı, problem çözmeyi ve öğrenmeyi seviyorum.
+    </p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-lime"><i class="fas fa-arrow-down"></i> Projeler</a>
+      <a href="#contact"  class="btn btn-ghost">İletişim</a>
+    </div>
+  </div>
+</section>
+
+<!-- ──── ABOUT ──── -->
+<section id="about">
+  <div class="section-wrap" style="padding-top:0; padding-bottom:0;">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <h2 class="section-title" style="color:var(--white)">Hakkımda</h2>
+    </div>
+    <div class="about-bento">
+
+      <div class="bento bento-bio reveal">
+        <div class="bento-label">Biyografi</div>
+        <p>
+          Merhaba! Ben <strong>Barış Polat</strong>,
+          <strong>İzmir Ekonomi Üniversitesi</strong> bünyesindeki <strong>Bilgisayar Programcılığı</strong>
+          programında öğrenciyim. Yazılım geliştirme, sistem tasarımı ve
+          kullanıcı deneyimi benim için bir tutku.
+        </p>
+        <p style="margin-top:1rem;">
+          Boş zamanlarımda <strong>Oyun</strong> ile ilgileniyorum.
+          Ekip çalışmasına önem veriyor, her projede yeni bir şeyler öğrenmeyi
+          hedefliyorum.
+        </p>
+      </div>
+
+      <div class="bento bento-photo reveal">
+        
+        <div class="photo-placeholder">
+          <img src="png.JPG" style="width:100%;height:100%;object-fit:cover;border-radius:8px;" />
+          
+          
+        </div>
+      </div>
+
+      <div class="bento bento-edu reveal">
+        <div class="bento-label">Eğitim</div>
+        <div class="edu-item-dark">
+          <div class="edu-dot" style="margin-top:8px;"></div>
+          <div>
+            <div class="edu-name">İzmir Ekonomi Üniversitesi</div>
+            <div class="edu-info">Bilgisayar Programcılığı · 2024 – Devam ediyor</div>
+          </div>
+        </div>
+        <div class="edu-item-dark">
+          <div class="edu-dot" style="margin-top:8px;"></div>
+          <div>
+            <div class="edu-name">Şirinyer Ertuğrul Gazi Lisesi</div>
+            <div class="edu-info">Sayısal · 2017 – 2022</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bento bento-stats reveal" style="padding:0; overflow:hidden;">
+        <div class="stat-cell">
+          <span class="stat-num">3+</span>
+          <span class="stat-txt">Proje</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">2+</span>
+          <span class="stat-txt">Yıl</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">5+</span>
+          <span class="stat-txt">Teknoloji</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ──── PROJECTS ──── -->
+<section id="projects">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Projeler</h2>
+    </div>
+    <div class="projects-layout">
+
+      <div class="proj-card reveal">
+        <div class="proj-top">
+          <span class="proj-emoji">🎁</span>
+          <a href="https://github.com/brspolatt-crypto/DeepyGift" target="_blank" class="proj-github"><i class="fab fa-github"></i></a>
+        </div>
+        <div class="proj-name">DeepyGift</div>
+        <div class="proj-desc">Bireylerin hediye ararken zaman kaybı yaşamaması için kullanılan bir site.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">PHP</span>
+          <span class="proj-tag">JavaScript</span>
+          <span class="proj-tag">SQL</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-top">
+          <span class="proj-emoji">💰</span>
+          <a href="https://github.com/brspolatt-crypto/Cheapify" target="_blank" class="proj-github"><i class="fab fa-github"></i></a>
+        </div>
+        <div class="proj-name">Cheapify</div>
+        <div class="proj-desc">İstediğin ürünü ararken fiyatları karşılaştırmana olanak sağlayan bir site.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">PHP</span>
+          <span class="proj-tag">SQL</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-top">
+          <span class="proj-emoji">🚗</span>
+          <a href="https://github.com/brspolatt-crypto/PolatCar" target="_blank" class="proj-github"><i class="fab fa-github"></i></a>
+        </div>
+        <div class="proj-name">Polat Car</div>
+        <div class="proj-desc">Alım ve satım yapan bir rent a car firmasının ihtiyaç duyduğu pek çok şeyi karşılayan araç alım satım platformu.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">C#</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ──── SKILLS ──── -->
+<section id="skills">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Beceriler</h2>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-box reveal">
+        <div class="skill-box-title"><i class="fas fa-code"></i> Programlama</div>
+        <div class="pills">
+          <span class="pill">Python</span><span class="pill">Java</span>
+          <span class="pill">JavaScript</span><span class="pill">C / C++</span>
+          <span class="pill">SQL</span>
+        </div>
+      </div>
+
+      <div class="skill-box reveal">
+        <div class="skill-box-title"><i class="fas fa-wrench"></i> Araçlar</div>
+        <div class="pills">
+          <span class="pill">Git</span><span class="pill">GitHub</span>
+          <span class="pill">VS Code</span><span class="pill">Jira</span>
+        </div>
+      </div>
+
+      <div class="skill-box reveal">
+        <div class="skill-box-title"><i class="fas fa-diagram-project"></i> Yöntemler</div>
+        <div class="pills">
+          <span class="pill">OOP</span><span class="pill">UML</span>
+          <span class="pill">Agile / Scrum</span><span class="pill">REST API</span>
+          <span class="pill">Veritabanı Tasarımı</span>
+        </div>
+      </div>
+
+      <div class="skill-box reveal">
+        <div class="skill-box-title"><i class="fas fa-globe"></i> Diller</div>
+        <div class="pills">
+          <span class="pill">Türkçe — Anadil</span>
+          <span class="pill">İngilizce — B2</span>
+        </div>
+      </div>
+
+      <div class="skill-box reveal">
+        <div class="skill-box-title"><i class="fas fa-users"></i> Kişisel</div>
+        <div class="pills">
+          <span class="pill">Problem Çözme</span>
+          <span class="pill">Ekip Çalışması</span>
+          <span class="pill">Analitik Düşünme</span>
+          <span class="pill">İletişim</span>
+        </div>
+      </div>
+</section>
+
+<!-- ──── CV ──── -->
+<section id="cv">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-num">04</span>
+      <h2 class="section-title">CV İndir</h2>
+    </div>
+    <div class="cv-row">
+      <div class="cv-box cv-box-tr reveal">
+        <div class="cv-box-flag">🇹🇷</div>
+        <div class="cv-box-lang">Türkçe CV</div>
+        <div class="cv-box-sub">PDF · Tek sayfa özgeçmiş</div>
+        <a href="cv.html" class="btn btn-white" download>
+          <i class="fas fa-download"></i> Türkçe İndir
+        </a>
+      </div>
+      <div class="cv-box cv-box-en reveal">
+        <div class="cv-box-flag">🇬🇧</div>
+        <div class="cv-box-lang">English CV</div>
+        <div class="cv-box-sub">PDF · One-page resume</div>
+        <a href="ingcv.html" class="btn btn-ink" download>
+          <i class="fas fa-download"></i> Download CV
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──── CONTACT ──── -->
+<section id="contact">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-num">05</span>
+      <h2 class="section-title">İletişim</h2>
+    </div>
+    <div class="contact-inner">
+      <p class="contact-lead reveal">
+        Bir proje fikrin mi var, iş birliği yapmak mı istiyorsun?
+        Aşağıdaki kanallardan bana ulaşabilirsin — en kısa sürede döneceğim.
+      </p>
+      <div class="clinks reveal">
+        <a href="mailto:brspolatt@gmail.com" class="clink">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <div class="clink-lbl">E-posta</div>
+            <div class="clink-val">brspolatt@gmail.com</div>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/barış-polat" target="_blank" class="clink">
+          <i class="fab fa-linkedin"></i>
+          <div>
+            <div class="clink-lbl">LinkedIn</div>
+            <div class="clink-val">Barış Polat</div>
+          </div>
+        </a>
+        <a href="https://github.com/brspolatt-crypto" target="_blank" class="clink">
+          <i class="fab fa-github"></i>
+          <div>
+            <div class="clink-lbl">GitHub</div>
+            <div class="clink-val">github.com/brspolatt-crypto</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 <span>Barış Polat</span> — Tüm hakları saklıdır.
+</footer>
+
+<script>
+  // Custom cursor
+  const cur = document.getElementById('cursor');
+  const fol = document.getElementById('cursor-follower');
+  let mx = 0, my = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cur.style.left = mx + 'px'; cur.style.top = my + 'px';
+    fol.style.left = mx + 'px'; fol.style.top = my + 'px';
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

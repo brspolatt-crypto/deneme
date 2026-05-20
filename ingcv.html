@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Barış Polat — CV</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: #e8e5e0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #faf9f7;
+      display: grid;
+      grid-template-columns: 68mm 1fr;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── LEFT SIDEBAR ── */
+    .sidebar {
+      background: #0e0d0b;
+      padding: 2.5rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      color: #faf9f7;
+    }
+
+    .avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: #1a1917;
+      border: 2.5px solid #c8f53a;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem; font-weight: 800;
+      color: #c8f53a;
+      margin-bottom: 0.25rem;
+    }
+
+    .s-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.15rem;
+      line-height: 1.2; color: #faf9f7;
+    }
+    .s-title {
+      font-size: 0.72rem; color: #c8f53a;
+      font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-top: 0.3rem;
+    }
+
+    .s-divider {
+      height: 1px; background: rgba(255,255,255,0.08);
+    }
+
+    .s-section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: #c8f53a; margin-bottom: 0.85rem;
+    }
+
+    /* Contact */
+    .contact-list { display: flex; flex-direction: column; gap: 0.65rem; }
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 0.55rem;
+      font-size: 0.72rem; color: rgba(255,255,255,0.65);
+      line-height: 1.4;
+    }
+    .contact-item .ci { color: #c8f53a; font-size: 0.7rem; width: 12px; flex-shrink: 0; margin-top: 1px; }
+
+    /* Skills */
+    .skill-list { display: flex; flex-direction: column; gap: 0.4rem; }
+    .skill-item {
+      font-size: 0.73rem; color: rgba(255,255,255,0.7);
+      padding: 0.3rem 0.6rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 5px;
+      border-left: 2px solid #c8f53a;
+    }
+
+    /* Soft skills */
+    .badge-wrap { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .badge {
+      font-size: 0.65rem; font-weight: 600;
+      padding: 0.25rem 0.55rem; border-radius: 4px;
+      background: rgba(200,245,58,0.1);
+      border: 1px solid rgba(200,245,58,0.2);
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* Languages */
+    .lang-item { margin-bottom: 0.55rem; }
+    .lang-name { font-size: 0.73rem; color: #faf9f7; font-weight: 600; }
+    .lang-level { font-size: 0.65rem; color: rgba(255,255,255,0.4); }
+    .lang-bar { height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; margin-top: 0.3rem; }
+    .lang-fill { height: 100%; background: #c8f53a; border-radius: 2px; }
+
+    /* ── RIGHT MAIN ── */
+    .main {
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .main-header { border-bottom: 2px solid #0e0d0b; padding-bottom: 1rem; }
+    .main-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 2rem;
+      letter-spacing: -0.03em; line-height: 1;
+      color: #0e0d0b;
+    }
+    .main-name span {
+      -webkit-text-stroke: 1.5px #0e0d0b;
+      color: transparent;
+    }
+    .main-role {
+      font-size: 0.8rem; color: #9c9890;
+      font-weight: 500; margin-top: 0.3rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+
+    .m-section { display: flex; flex-direction: column; gap: 0.2rem; }
+    .m-section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem; font-weight: 800;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: #0e0d0b;
+      display: flex; align-items: center; gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .m-section-title::after {
+      content: ''; flex: 1; height: 1.5px; background: #e0ddd7;
+    }
+
+    /* Summary */
+    .summary {
+      font-size: 0.78rem; color: #5a5652; line-height: 1.7;
+      background: #f0ede8; border-radius: 8px; padding: 0.85rem 1rem;
+      border-left: 3px solid #c8f53a;
+    }
+
+    /* Education */
+    .edu-entry { display: flex; gap: 0.75rem; margin-bottom: 0.85rem; }
+    .edu-entry:last-child { margin-bottom: 0; }
+    .edu-dot-wrap { display: flex; flex-direction: column; align-items: center; padding-top: 4px; }
+    .edu-dot-m { width: 8px; height: 8px; border-radius: 50%; background: #c8f53a; flex-shrink: 0; }
+    .edu-line { flex: 1; width: 1px; background: #e0ddd7; margin-top: 4px; }
+    .edu-school { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.82rem; color: #0e0d0b; }
+    .edu-dept { font-size: 0.74rem; color: #9c9890; margin-top: 0.1rem; }
+    .edu-date {
+      font-size: 0.65rem; font-weight: 600;
+      background: #0e0d0b; color: #c8f53a;
+      padding: 0.15rem 0.5rem; border-radius: 4px;
+      display: inline-block; margin-top: 0.25rem;
+    }
+
+    /* Projects */
+    .proj-entry {
+      background: #f7f6f3; border: 1px solid #e0ddd7;
+      border-radius: 8px; padding: 0.85rem 1rem;
+      margin-bottom: 0.6rem;
+      border-left: 3px solid #0e0d0b;
+      position: relative;
+    }
+    .proj-entry:last-child { margin-bottom: 0; }
+    .proj-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+    .proj-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.82rem; color: #0e0d0b; }
+    .proj-tech-inline {
+      font-size: 0.62rem; font-weight: 600; color: #9c9890;
+      background: #e0ddd7; padding: 0.15rem 0.45rem; border-radius: 4px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .proj-desc { font-size: 0.73rem; color: #6a6662; margin-top: 0.35rem; line-height: 1.55; }
+
+    /* Print */
+    @media print {
+      body { background: none; padding: 0; }
+      .page { box-shadow: none; width: 100%; min-height: auto; }
+      .no-print { display: none; }
+    }
+
+    /* Print button */
+    .print-btn {
+      position: fixed; bottom: 2rem; right: 2rem;
+      background: #0e0d0b; color: #c8f53a;
+      border: none; padding: 0.75rem 1.5rem;
+      border-radius: 999px; font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 0.85rem;
+      cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: transform 0.2s;
+    }
+    .print-btn:hover { transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <aside class="sidebar">
+
+    <div>
+      <div class="avatar">BP</div>
+      <div class="s-name">Barış<br>Polat</div>
+      <div class="s-title">Computer Programming</div>
+    </div>
+
+    <div class="s-divider"></div>
+
+    <div>
+      <div class="s-section-title">Contact</div>
+      <div class="contact-list">
+        <div class="contact-item">
+          <span class="ci">✉</span>
+          <span>brspolatt@gmail.com</span>
+        </div>
+        <div class="contact-item">
+          <span class="ci">in</span>
+          <span>Barış Polat</span>
+        </div>
+        <div class="contact-item">
+          <span class="ci">⌥</span>
+          <span>github.com/<br>brspolatt-crypto</span>
+        </div>
+        <div class="contact-item">
+          <span class="ci">◎</span>
+          <span>Izmir, Turkey</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="s-divider"></div>
+
+    <div>
+      <div class="s-section-title">Technical Skills</div>
+      <div class="skill-list">
+        <div class="skill-item">PHP</div>
+        <div class="skill-item">JavaScript</div>
+        <div class="skill-item">SQL</div>
+        <div class="skill-item">C#</div>
+        <div class="skill-item">Python</div>
+        <div class="skill-item">Java</div>
+        <div class="skill-item">C / C++</div>
+      </div>
+    </div>
+
+    <div class="s-divider"></div>
+
+    <div>
+      <div class="s-section-title">Tools</div>
+      <div class="skill-list">
+        <div class="skill-item">Git & GitHub</div>
+        <div class="skill-item">VS Code</div>
+        <div class="skill-item">Jira</div>
+      </div>
+    </div>
+
+    <div class="s-divider"></div>
+
+    <div>
+      <div class="s-section-title">Soft Skills</div>
+      <div class="badge-wrap">
+        <span class="badge">Problem Solving</span>
+        <span class="badge">Teamwork</span>
+        <span class="badge">Analytical Thinking</span>
+        <span class="badge">Communication</span>
+      </div>
+    </div>
+
+    <div class="s-divider"></div>
+
+    <div>
+      <div class="s-section-title">Languages</div>
+      <div class="lang-item">
+        <div class="lang-name">Turkish</div>
+        <div class="lang-level">Native</div>
+        <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
+      </div>
+      <div class="lang-item">
+        <div class="lang-name">English</div>
+        <div class="lang-level">B2 — Upper-Intermediate</div>
+        <div class="lang-bar"><div class="lang-fill" style="width:70%"></div></div>
+      </div>
+    </div>
+
+  </aside>
+
+  <main class="main">
+
+    <div class="main-header">
+      <div class="main-name">BARIŞ <span>POLAT</span></div>
+      <div class="main-role">Software Developer &amp; Student · MBP 206</div>
+    </div>
+
+    <div class="m-section">
+      <div class="m-section-title">Summary</div>
+      <div class="summary">
+        Computer Programming student at Izmir University of Economics. 
+        Developing web and desktop applications using PHP, JavaScript, SQL, and C#. 
+        Highly interested in problem-solving and exploring new technologies; 
+        strongly values teamwork and collaboration.
+      </div>
+    </div>
+
+    <div class="m-section">
+      <div class="m-section-title">Education</div>
+
+      <div class="edu-entry">
+        <div class="edu-dot-wrap">
+          <div class="edu-dot-m"></div>
+          <div class="edu-line"></div>
+        </div>
+        <div>
+          <div class="edu-school">Izmir University of Economics</div>
+          <div class="edu-dept">Computer Programming — Associate Degree</div>
+          <div class="edu-date">2024 – Present</div>
+        </div>
+      </div>
+
+      <div class="edu-entry">
+        <div class="edu-dot-wrap">
+          <div class="edu-dot-m"></div>
+        </div>
+        <div>
+          <div class="edu-school">Sirinyer Ertugrul Gazi High School</div>
+          <div class="edu-dept">STEM / Quantitative Curriculum</div>
+          <div class="edu-date">2017 – 2022</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-section">
+      <div class="m-section-title">Projects</div>
+
+      <div class="proj-entry">
+        <div class="proj-header">
+          <div class="proj-name">🎁 DeepyGift</div>
+          <span class="proj-tech-inline">PHP · JavaScript · SQL</span>
+        </div>
+        <div class="proj-desc">
+          A web platform designed to save time for individuals looking for the perfect gift.
+        </div>
+      </div>
+
+      <div class="proj-entry">
+        <div class="proj-header">
+          <div class="proj-name">💰 Cheapify</div>
+          <span class="proj-tech-inline">PHP · SQL</span>
+        </div>
+        <div class="proj-desc">
+          A platform that enables users to easily compare prices for the products they are searching for.
+        </div>
+      </div>
+
+      <div class="proj-entry">
+        <div class="proj-header">
+          <div class="proj-name">🚗 Polat Car</div>
+          <span class="proj-tech-inline">C#</span>
+        </div>
+        <div class="proj-desc">
+          A comprehensive car management platform tailored to meet the operational needs of a car rental company, handling buy and sell transactions.
+        </div>
+      </div>
+    </div>
+
+    <div class="m-section">
+      <div class="m-section-title">Methodologies &amp; Concepts</div>
+      <div style="display:flex; flex-wrap:wrap; gap:0.4rem;">
+        <span style="font-size:0.72rem; padding:0.3rem 0.7rem; background:#f0ede8; border:1px solid #e0ddd7; border-radius:6px; color:#3a3834;">OOP</span>
+        <span style="font-size:0.72rem; padding:0.3rem 0.7rem; background:#f0ede8; border:1px solid #e0ddd7; border-radius:6px; color:#3a3834;">UML</span>
+        <span style="font-size:0.72rem; padding:0.3rem 0.7rem; background:#f0ede8; border:1px solid #e0ddd7; border-radius:6px; color:#3a3834;">Agile / Scrum</span>
+        <span style="font-size:0.72rem; padding:0.3rem 0.7rem; background:#f0ede8; border:1px solid #e0ddd7; border-radius:6px; color:#3a3834;">REST API</span>
+        <span style="font-size:0.72rem; padding:0.3rem 0.7rem; background:#f0ede8; border:1px solid #e0ddd7; border-radius:6px; color:#3a3834;">Database Design</span>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<button class="print-btn no-print" onclick="window.print()">
+  🖨 Save as PDF
+</button>
+
+</body>
+</html>
